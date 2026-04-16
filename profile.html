@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Profile - BIG INDIA Mart</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="index.html" style="text-decoration:none;color:inherit;">BIG <span>INDIA</span> MART</a></div>
+  <div class="nav-links">
+    <a href="customer-dashboard.html">← Dashboard</a>
+    <a href="#" onclick="logout()" style="color:#ef4444;">Logout</a>
+  </div>
+</nav>
+
+<div class="dashboard-layout">
+  <div class="sidebar">
+    <div class="user-info">
+      <div class="avatar" id="avatar-letter">U</div>
+      <h4 id="sidebar-name">User</h4>
+      <p id="sidebar-email">user@email.com</p>
+    </div>
+    <a href="customer-dashboard.html">🏠 Dashboard</a>
+    <a href="grocery.html">🛒 Grocery Store</a>
+    <a href="profile.html" class="active">👤 My Profile</a>
+    <a href="#" onclick="logout()" style="color:#ef4444;">🚪 Logout</a>
+  </div>
+
+  <div class="main-content">
+    <div class="page-title">My Profile</div>
+    <div class="page-subtitle">Your account details and KYC status</div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:800px;">
+
+      <!-- PERSONAL INFO -->
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:16px; padding:24px; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+        <h3 style="font-size:1rem; font-weight:600; margin-bottom:20px; color:#1e293b;">Personal Information</h3>
+        <div style="display:flex; flex-direction:column; gap:14px; font-size:0.9rem;">
+          <div><span style="color:#94a3b8; display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;">Full Name</span><strong id="p-name" style="color:#1e293b;">-</strong></div>
+          <div><span style="color:#94a3b8; display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;">Email</span><strong id="p-email" style="color:#1e293b;">-</strong></div>
+          <div><span style="color:#94a3b8; display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;">Mobile</span><strong id="p-mobile" style="color:#1e293b;">-</strong></div>
+          <div><span style="color:#94a3b8; display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;">Date of Birth</span><strong id="p-dob" style="color:#1e293b;">-</strong></div>
+          <div><span style="color:#94a3b8; display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;">Gender</span><strong id="p-gender" style="color:#1e293b;">-</strong></div>
+        </div>
+      </div>
+
+      <!-- ADDRESS -->
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:16px; padding:24px; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+        <h3 style="font-size:1rem; font-weight:600; margin-bottom:20px; color:#1e293b;">Address Details</h3>
+        <div style="display:flex; flex-direction:column; gap:14px; font-size:0.9rem;">
+          <div><span style="color:#94a3b8; display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;">Address</span><strong id="p-address" style="color:#1e293b;">-</strong></div>
+          <div><span style="color:#94a3b8; display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;">City</span><strong id="p-city" style="color:#1e293b;">-</strong></div>
+          <div><span style="color:#94a3b8; display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;">State</span><strong id="p-state" style="color:#1e293b;">-</strong></div>
+          <div><span style="color:#94a3b8; display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;">PIN Code</span><strong id="p-pin" style="color:#1e293b;">-</strong></div>
+        </div>
+      </div>
+
+      <!-- KYC STATUS -->
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:16px; padding:24px; grid-column:1/-1; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+        <h3 style="font-size:1rem; font-weight:600; margin-bottom:20px; color:#1e293b;">KYC Status</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; font-size:0.9rem;">
+          <div><span style="color:#94a3b8; display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;">Aadhaar Number</span><strong id="p-aadhaar" style="color:#1e293b;">-</strong></div>
+          <div><span style="color:#94a3b8; display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;">PAN Number</span><strong id="p-pan" style="color:#1e293b;">-</strong></div>
+          <div>
+            <span style="color:#94a3b8; display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;">Verification Status</span>
+            <span id="p-kyc-badge"></span>
+          </div>
+        </div>
+        <div id="kyc-pending-msg" style="display:none; margin-top:16px; padding:12px; background:#fef9c3; border:1px solid #fde68a; border-radius:10px; font-size:0.85rem; color:#ca8a04;">
+          ⏳ Your KYC documents are under review. You will be notified once verified.
+        </div>
+        <div id="kyc-verified-msg" style="display:none; margin-top:16px; padding:12px; background:#dcfce7; border:1px solid #bbf7d0; border-radius:10px; font-size:0.85rem; color:#16a34a;">
+          ✅ Your KYC is verified. You have full access to all services.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const user = JSON.parse(localStorage.getItem('bim_current_user') || 'null');
+  if (!user || user.role !== 'customer') window.location.href = 'login.html';
+
+  // Get latest user data
+  const users = JSON.parse(localStorage.getItem('bim_users') || '[]');
+  const u = users.find(x => x.email === user.email) || user;
+
+  document.getElementById('avatar-letter').textContent = u.name.charAt(0).toUpperCase();
+  document.getElementById('sidebar-name').textContent = u.name;
+  document.getElementById('sidebar-email').textContent = u.email;
+
+  document.getElementById('p-name').textContent = u.name || '-';
+  document.getElementById('p-email').textContent = u.email || '-';
+  document.getElementById('p-mobile').textContent = u.mobile || '-';
+  document.getElementById('p-dob').textContent = u.dob || '-';
+  document.getElementById('p-gender').textContent = u.gender || '-';
+  document.getElementById('p-address').textContent = u.address || '-';
+  document.getElementById('p-city').textContent = u.city || '-';
+  document.getElementById('p-state').textContent = u.state || '-';
+  document.getElementById('p-pin').textContent = u.pin || '-';
+  document.getElementById('p-aadhaar').textContent = u.aadhaar ? u.aadhaar.slice(0,4) + ' **** ' + u.aadhaar.slice(-4) : '-';
+  document.getElementById('p-pan').textContent = u.pan || 'Not provided';
+
+  if (u.kycStatus === 'Verified') {
+    document.getElementById('p-kyc-badge').innerHTML = '<span class="badge badge-green">Verified ✓</span>';
+    document.getElementById('kyc-verified-msg').style.display = 'block';
+  } else {
+    document.getElementById('p-kyc-badge').innerHTML = '<span class="badge badge-yellow">Pending</span>';
+    document.getElementById('kyc-pending-msg').style.display = 'block';
+  }
+
+  function logout() {
+    localStorage.removeItem('bim_current_user');
+    window.location.href = 'login.html';
+  }
+</script>
+
+</body>
+</html>

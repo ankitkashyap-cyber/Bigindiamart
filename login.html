@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - BIG INDIA MART</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 50%, #f8fafc 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 24px;
+      padding: 40px 36px;
+      width: 100%; max-width: 420px;
+      box-shadow: 0 8px 40px rgba(37,99,235,0.1);
+    }
+
+    /* LOGO */
+    .logo { text-align: center; margin-bottom: 6px; }
+    .logo h1 { font-size: 1.7rem; font-weight: 900; color: #1e293b; letter-spacing: 0.02em; }
+    .logo h1 .india { color: #f97316; }
+    .logo p { font-size: 0.82rem; color: #64748b; margin-top: 4px; }
+
+    /* TABS */
+    .tabs {
+      display: flex;
+      background: #f1f5f9;
+      border-radius: 12px;
+      padding: 4px;
+      margin: 24px 0 22px;
+    }
+    .tab {
+      flex: 1; padding: 10px;
+      border: none; background: transparent;
+      color: #64748b;
+      border-radius: 10px; cursor: pointer;
+      font-size: 0.9rem; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .tab.active {
+      background: #2563eb;
+      color: white;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    }
+
+    /* ALERT */
+    .alert {
+      padding: 11px 14px; border-radius: 10px;
+      font-size: 0.83rem; margin-bottom: 16px;
+    }
+    .alert-err  { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
+    .alert-ok   { background: #dcfce7; color: #16a34a; border: 1px solid #bbf7d0; }
+    .alert-info { background: #dbeafe; color: #1d4ed8; border: 1px solid #bfdbfe; }
+
+    /* FORM */
+    .fg { margin-bottom: 14px; }
+    .fg label { display: block; font-size: 0.78rem; color: #64748b; margin-bottom: 6px; font-weight: 600; }
+    .fg input {
+      width: 100%;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 13px 16px;
+      color: #1e293b; font-size: 0.93rem;
+      outline: none; transition: all 0.2s;
+    }
+    .fg input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+      background: #ffffff;
+    }
+    .fg input::placeholder { color: #cbd5e1; }
+
+    /* PHONE ROW */
+    .phone-row { display: flex; gap: 8px; }
+    .phone-row input { flex: 1; }
+    .btn-otp {
+      background: #2563eb;
+      color: white; border: none;
+      border-radius: 12px; padding: 13px 14px;
+      font-size: 0.82rem; font-weight: 700;
+      cursor: pointer; white-space: nowrap;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.25);
+    }
+    .btn-otp:hover { background: #1d4ed8; }
+    .btn-otp:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    /* OTP INPUT */
+    .otp-big {
+      letter-spacing: 0.35em; text-align: center;
+      font-size: 1.3rem; font-weight: 800;
+    }
+    .timer { font-size: 0.75rem; color: #94a3b8; text-align: right; margin-top: 5px; }
+
+    /* OTP HINT */
+    .otp-hint {
+      background: #dbeafe;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px; padding: 10px 14px;
+      font-size: 0.82rem; color: #1d4ed8;
+      margin-top: 10px; text-align: center;
+    }
+    .otp-hint strong { font-size: 1.2rem; letter-spacing: 0.2em; display: block; margin-top: 4px; color: #1e293b; }
+
+    /* SUBMIT */
+    .btn-submit {
+      width: 100%; padding: 14px;
+      background: #2563eb;
+      border: none; border-radius: 12px;
+      color: white; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s;
+      margin-top: 6px;
+      box-shadow: 0 4px 16px rgba(37,99,235,0.25);
+    }
+    .btn-submit:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,99,235,0.35); }
+    .btn-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+    /* ADMIN HINT */
+    .admin-hint {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px; padding: 10px 14px;
+      font-size: 0.78rem; color: #64748b;
+      text-align: center; margin-top: 14px;
+    }
+
+    .footer-txt { text-align: center; margin-top: 18px; font-size: 0.84rem; color: #64748b; }
+    .footer-txt a { color: #2563eb; text-decoration: none; font-weight: 600; }
+    .footer-txt a:hover { color: #1d4ed8; }
+
+    .divider { height: 1px; background: #e2e8f0; margin: 18px 0; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <div class="logo">
+    <h1>BIG <span class="india">INDIA</span> MART</h1>
+    <p>Your One Stop Reliable Service Platform</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" id="tab-c" onclick="switchTab('customer')">👤 Customer</button>
+    <button class="tab" id="tab-a" onclick="switchTab('admin')">🔐 Admin</button>
+  </div>
+
+  <div id="alert-box"></div>
+
+  <!-- CUSTOMER: PHONE + OTP -->
+  <div id="customer-form">
+    <div class="fg">
+      <label>Mobile Number</label>
+      <div class="phone-row">
+        <input type="tel" id="l-mobile" placeholder="Enter 10-digit number" maxlength="10"
+          oninput="this.value=this.value.replace(/\D/g,'')"/>
+        <button class="btn-otp" id="otp-btn" onclick="sendOTP()">Send OTP</button>
+      </div>
+    </div>
+
+    <div id="otp-wrap" style="display:none;">
+      <div class="fg" style="margin-bottom:4px;">
+        <label>Enter OTP</label>
+        <input type="text" id="l-otp" class="otp-big" placeholder="• • • • • •" maxlength="6"
+          oninput="this.value=this.value.replace(/\D/g,'')"/>
+      </div>
+      <div class="timer" id="otp-timer"></div>
+      <div id="otp-hint" class="otp-hint" style="display:none;">
+        OTP for demo: <strong id="otp-val"></strong>
+      </div>
+    </div>
+
+    <button class="btn-submit" onclick="loginWithOTP()" id="login-btn" style="margin-top:18px;">Login →</button>
+    <div class="footer-txt">New here? <a href="register.html">Create an account</a></div>
+  </div>
+
+  <!-- ADMIN: EMAIL + PASSWORD -->
+  <div id="admin-form" style="display:none;">
+    <div class="fg">
+      <label>Email Address</label>
+      <input type="email" id="a-email" placeholder="Enter your email"/>
+    </div>
+    <div class="fg">
+      <label>Password</label>
+      <input type="password" id="a-pass" placeholder="Enter your password"
+        onkeydown="if(event.key==='Enter') adminLogin()"/>
+    </div>
+    <button class="btn-submit" onclick="adminLogin()">Login →</button>
+    <div class="admin-hint">📧 admin@bigindiamart.com &nbsp;·&nbsp; 🔑 admin123</div>
+  </div>
+
+</div>
+
+<script>
+  let currentTab = 'customer';
+  let generatedOTP = '';
+  let timerInterval = null;
+  let otpSent = false;
+
+  function switchTab(tab) {
+    currentTab = tab;
+    document.getElementById('tab-c').classList.toggle('active', tab === 'customer');
+    document.getElementById('tab-a').classList.toggle('active', tab === 'admin');
+    document.getElementById('customer-form').style.display = tab === 'customer' ? 'block' : 'none';
+    document.getElementById('admin-form').style.display = tab === 'admin' ? 'block' : 'none';
+    document.getElementById('alert-box').innerHTML = '';
+  }
+
+  function showAlert(msg, type = 'err') {
+    document.getElementById('alert-box').innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
+  }
+
+  function sendOTP() {
+    const mob = document.getElementById('l-mobile').value.trim();
+    if (mob.length !== 10) return showAlert('Enter valid 10-digit mobile number');
+
+    // Check if user exists
+    const users = JSON.parse(localStorage.getItem('bim_users') || '[]');
+    const user = users.find(u => u.mobile === mob);
+    if (!user) return showAlert('Mobile not registered. <a href="register.html" style="color:#93c5fd;">Register here</a>');
+
+    generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    otpSent = true;
+
+    document.getElementById('otp-wrap').style.display = 'block';
+    document.getElementById('l-otp').value = '';
+    document.getElementById('otp-btn').disabled = true;
+    document.getElementById('otp-btn').textContent = 'Sent ✓';
+    document.getElementById('otp-hint').style.display = 'block';
+    document.getElementById('otp-val').textContent = generatedOTP;
+    document.getElementById('login-btn').textContent = 'Verify OTP & Login →';
+
+    showAlert(`OTP sent to +91 ${mob}`, 'info');
+
+    clearInterval(timerInterval);
+    let s = 60;
+    timerInterval = setInterval(() => {
+      s--;
+      document.getElementById('otp-timer').textContent = `Resend in ${s}s`;
+      if (s <= 0) {
+        clearInterval(timerInterval);
+        document.getElementById('otp-timer').textContent = '';
+        document.getElementById('otp-btn').disabled = false;
+        document.getElementById('otp-btn').textContent = 'Resend';
+      }
+    }, 1000);
+  }
+
+  function loginWithOTP() {
+    const mob = document.getElementById('l-mobile').value.trim();
+    if (!otpSent) {
+      if (mob.length !== 10) return showAlert('Enter valid 10-digit mobile number');
+      return showAlert('Please send OTP first');
+    }
+
+    const otp = document.getElementById('l-otp').value.trim();
+    if (!otp) return showAlert('Please enter the OTP');
+    if (otp !== generatedOTP) return showAlert('❌ Incorrect OTP. Try again');
+
+    clearInterval(timerInterval);
+    const users = JSON.parse(localStorage.getItem('bim_users') || '[]');
+    const user = users.find(u => u.mobile === mob);
+
+    localStorage.setItem('bim_current_user', JSON.stringify(user));
+    showAlert('✅ Login successful! Redirecting...', 'ok');
+    setTimeout(() => window.location.href = 'customer-dashboard.html', 900);
+  }
+
+  function adminLogin() {
+    const email = document.getElementById('a-email').value.trim();
+    const pass  = document.getElementById('a-pass').value;
+    if (email === 'admin@bigindiamart.com' && pass === 'admin123') {
+      localStorage.setItem('bim_current_user', JSON.stringify({ name: 'Admin', role: 'admin', email }));
+      showAlert('✅ Admin login successful!', 'ok');
+      setTimeout(() => window.location.href = 'admin.html', 900);
+    } else {
+      showAlert('Wrong admin credentials');
+    }
+  }
+
+  // Auto redirect
+  const cur = JSON.parse(localStorage.getItem('bim_current_user') || 'null');
+  if (cur) window.location.href = cur.role === 'admin' ? 'admin.html' : 'customer-dashboard.html';
+</script>
+
+</body>
+</html>

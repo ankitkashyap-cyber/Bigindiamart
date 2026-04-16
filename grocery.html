@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grocery Store - BIG INDIA Mart</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="index.html" style="text-decoration:none;color:inherit;">BIG <span>INDIA</span> MART</a></div>
+  <div class="nav-links">
+    <a href="customer-dashboard.html">← Dashboard</a>
+    <a href="#" onclick="logout()" style="color:#ef4444;">Logout</a>
+  </div>
+</nav>
+
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="user-info">
+      <div class="avatar" id="avatar-letter">U</div>
+      <h4 id="sidebar-name">User</h4>
+      <p id="sidebar-email">user@email.com</p>
+    </div>
+    <a href="customer-dashboard.html">🏠 Dashboard</a>
+    <a href="grocery.html" class="active">🛒 Grocery Store</a>
+    <a href="profile.html">👤 My Profile</a>
+    <a href="#" onclick="logout()" style="color:#ef4444;">🚪 Logout</a>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-content" style="display:flex; gap:0; padding:0; flex:1; overflow:hidden;">
+
+    <!-- PRODUCTS -->
+    <div style="flex:1; padding:30px; overflow-y:auto;">
+      <div class="page-title">🛒 Grocery Store</div>
+      <div class="page-subtitle">Fresh items delivered to your door</div>
+
+      <!-- SEARCH & FILTER -->
+      <div style="display:flex; gap:12px; margin-bottom:24px; flex-wrap:wrap;">
+        <input type="text" id="search-input" placeholder="Search items..." oninput="filterItems()"
+          style="flex:1; min-width:200px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:10px 14px; color:#1e293b; outline:none;"/>
+        <select id="cat-filter" onchange="filterItems()"
+          style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:10px 14px; color:#1e293b; outline:none;">
+          <option value="">All Categories</option>
+          <option>Vegetables</option>
+          <option>Fruits</option>
+          <option>Dairy</option>
+          <option>Grains</option>
+          <option>Snacks</option>
+          <option>Beverages</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="grocery-grid" id="grocery-grid">
+        <div style="grid-column:1/-1; text-align:center; color:#64748b; padding:60px 0;">
+          <div style="font-size:3rem; margin-bottom:12px;">🛒</div>
+          <p>No items available yet. Check back soon!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CART -->
+    <div class="cart-sidebar">
+      <h3>🛒 My Cart <span id="cart-count" style="background:#2563eb; color:white; border-radius:20px; padding:2px 8px; font-size:0.75rem; margin-left:6px;">0</span></h3>
+
+      <div id="cart-items">
+        <p style="color:#64748b; font-size:0.85rem; text-align:center; padding:20px 0;">Cart is empty</p>
+      </div>
+
+      <div class="cart-total" id="cart-total-row" style="display:none;">
+        <span>Total</span>
+        <span id="cart-total-val" style="color:#3b82f6;">₹0</span>
+      </div>
+
+      <button class="btn btn-blue btn-full" style="margin-top:16px;" onclick="checkout()" id="checkout-btn" disabled>
+        Proceed to Checkout
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkout-modal">
+  <div class="modal">
+    <h3>🧾 Order Summary</h3>
+    <div id="checkout-summary" style="margin-bottom:20px; max-height:200px; overflow-y:auto;"></div>
+    <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.1rem; margin-bottom:20px; padding-top:12px; border-top:1px solid #e2e8f0;">
+      <span>Grand Total</span>
+      <span id="checkout-total" style="color:#3b82f6;"></span>
+    </div>
+    <div class="form-group">
+      <label>Delivery Address</label>
+      <textarea id="delivery-address" rows="2" placeholder="Enter delivery address"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Payment Method</label>
+      <select id="payment-method">
+        <option>Cash on Delivery</option>
+        <option>UPI</option>
+        <option>Net Banking</option>
+      </select>
+    </div>
+    <div style="display:flex; gap:12px;">
+      <button class="btn btn-outline" onclick="document.getElementById('checkout-modal').classList.remove('active')" style="flex:1;">Cancel</button>
+      <button class="btn btn-blue" onclick="placeOrder()" style="flex:2;">Place Order ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="success-modal">
+  <div class="modal" style="text-align:center;">
+    <div style="font-size:3.5rem; margin-bottom:16px;">🎉</div>
+    <h3>Order Placed!</h3>
+    <p style="color:#94a3b8; margin:12px 0 8px;">Your order has been placed successfully.</p>
+    <p id="order-id-display" style="color:#3b82f6; font-weight:700; margin-bottom:24px;"></p>
+    <button class="btn btn-blue" onclick="window.location.href='customer-dashboard.html'">Go to Dashboard</button>
+  </div>
+</div>
+
+<script src="grocery-images.js"></script>
+<script>
+  const user = JSON.parse(localStorage.getItem('bim_current_user') || 'null');
+  if (!user || user.role !== 'customer') window.location.href = 'login.html';
+
+  document.getElementById('sidebar-name').textContent = user.name;
+  document.getElementById('sidebar-email').textContent = user.email;
+  document.getElementById('avatar-letter').textContent = user.name.charAt(0).toUpperCase();
+
+  let cart = {};
+  let allItems = [];
+
+  function loadItems() {
+    allItems = JSON.parse(localStorage.getItem('bim_grocery_items') || '[]');
+    renderItems(allItems);
+  }
+
+  function renderItems(items) {
+    const grid = document.getElementById('grocery-grid');
+    if (items.length === 0) {
+      grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:#64748b; padding:60px 0;">
+        <div style="font-size:3rem; margin-bottom:12px;">🛒</div>
+        <p>No items available yet. Check back soon!</p>
+      </div>`;
+      return;
+    }
+    grid.innerHTML = items.map(item => `
+      <div class="grocery-card">
+        <img src="${item.image}" alt="${item.name}" style="width:100%;height:150px;object-fit:cover;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div style="display:none;width:100%;height:150px;background:#1e293b;align-items:center;justify-content:center;font-size:3rem;">🛒</div>
+        <div class="card-body">
+          <h4>${item.name}</h4>
+          <div class="unit">${item.category} • ${item.unit}</div>
+          <div class="price">₹${item.price}</div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <button onclick="changeQty('${item.id}', -1)" style="background:#e2e8f0; border:none; color:#1e293b; width:28px; height:28px; border-radius:6px; cursor:pointer; font-size:1rem;">−</button>
+            <span id="qty-${item.id}" style="min-width:20px; text-align:center; font-weight:600; color:#1e293b;">${cart[item.id] ? cart[item.id].qty : 0}</span>
+            <button onclick="changeQty('${item.id}', 1)" style="background:#2563eb; border:none; color:white; width:28px; height:28px; border-radius:6px; cursor:pointer; font-size:1rem;">+</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function changeQty(id, delta) {
+    const item = allItems.find(i => i.id === id);
+    if (!item) return;
+    if (!cart[id]) cart[id] = { ...item, qty: 0 };
+    cart[id].qty = Math.max(0, cart[id].qty + delta);
+    if (cart[id].qty === 0) delete cart[id];
+    document.getElementById('qty-' + id).textContent = cart[id] ? cart[id].qty : 0;
+    updateCart();
+  }
+
+  function updateCart() {
+    const items = Object.values(cart);
+    const count = items.reduce((s, i) => s + i.qty, 0);
+    const total = items.reduce((s, i) => s + i.qty * i.price, 0);
+
+    document.getElementById('cart-count').textContent = count;
+    document.getElementById('checkout-btn').disabled = count === 0;
+
+    if (items.length === 0) {
+      document.getElementById('cart-items').innerHTML = '<p style="color:#64748b; font-size:0.85rem; text-align:center; padding:20px 0;">Cart is empty</p>';
+      document.getElementById('cart-total-row').style.display = 'none';
+    } else {
+      document.getElementById('cart-items').innerHTML = items.map(i => `
+        <div class="cart-item">
+          <span class="item-name">${i.name}</span>
+          <span class="item-qty">×${i.qty}</span>
+          <span class="item-price">₹${i.qty * i.price}</span>
+          <button class="remove-btn" onclick="removeItem('${i.id}')">✕</button>
+        </div>
+      `).join('');
+      document.getElementById('cart-total-row').style.display = 'flex';
+      document.getElementById('cart-total-val').textContent = '₹' + total;
+    }
+  }
+
+  function removeItem(id) {
+    delete cart[id];
+    const qtyEl = document.getElementById('qty-' + id);
+    if (qtyEl) qtyEl.textContent = 0;
+    updateCart();
+  }
+
+  function filterItems() {
+    const q = document.getElementById('search-input').value.toLowerCase();
+    const cat = document.getElementById('cat-filter').value;
+    const filtered = allItems.filter(i =>
+      i.name.toLowerCase().includes(q) &&
+      (cat === '' || i.category === cat)
+    );
+    renderItems(filtered);
+  }
+
+  function checkout() {
+    const items = Object.values(cart);
+    if (items.length === 0) return;
+    const total = items.reduce((s, i) => s + i.qty * i.price, 0);
+
+    document.getElementById('checkout-summary').innerHTML = items.map(i => `
+      <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #e2e8f0; font-size:0.88rem;">
+        <span>${i.name} ×${i.qty}</span>
+        <span style="color:#3b82f6;">₹${i.qty * i.price}</span>
+      </div>
+    `).join('');
+    document.getElementById('checkout-total').textContent = '₹' + total;
+
+    // Pre-fill address
+    document.getElementById('delivery-address').value = user.address ? `${user.address}, ${user.city}, ${user.state} - ${user.pin}` : '';
+    document.getElementById('checkout-modal').classList.add('active');
+  }
+
+  function placeOrder() {
+    const address = document.getElementById('delivery-address').value.trim();
+    if (!address) return alert('Please enter delivery address');
+
+    const items = Object.values(cart);
+    const total = items.reduce((s, i) => s + i.qty * i.price, 0);
+    const orderId = 'BIM' + Date.now();
+
+    const order = {
+      id: orderId,
+      items: items.length,
+      itemDetails: items,
+      total,
+      address,
+      payment: document.getElementById('payment-method').value,
+      date: new Date().toLocaleDateString('en-IN'),
+      status: 'Confirmed'
+    };
+
+    const key = 'bim_orders_' + user.id;
+    const orders = JSON.parse(localStorage.getItem(key) || '[]');
+    orders.push(order);
+    localStorage.setItem(key, JSON.stringify(orders));
+
+    cart = {};
+    updateCart();
+    document.getElementById('checkout-modal').classList.remove('active');
+    document.getElementById('order-id-display').textContent = 'Order ID: ' + orderId;
+    document.getElementById('success-modal').classList.add('active');
+    loadItems();
+  }
+
+  function logout() {
+    localStorage.removeItem('bim_current_user');
+    window.location.href = 'login.html';
+  }
+
+  loadItems();
+</script>
+
+</body>
+</html>

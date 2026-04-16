@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - BIG INDIA MART</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
+
+    body {
+      min-height: 100vh;
+      background: #f1f5f9;
+      background-image:
+        radial-gradient(ellipse at 10% 20%, rgba(37,99,235,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 80%, rgba(16,185,129,0.06) 0%, transparent 50%);
+      display: flex; flex-direction: column;
+    }
+
+    /* NAV */
+    nav {
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 14px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      position: sticky; top:0; z-index:100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+    .brand { font-size:1.3rem; font-weight:800; color:#1e293b; text-decoration:none; }
+    .brand span { color:#f97316; }
+    .nav-right a { color:#64748b; text-decoration:none; font-size:0.88rem; margin-left:20px; transition:color 0.2s; }
+    .nav-right a:hover { color:#1e293b; }
+
+    /* PAGE */
+    .page { flex:1; display:flex; align-items:flex-start; justify-content:center; padding:36px 16px 60px; }
+
+    /* CARD */
+    .card {
+      width:100%; max-width:640px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 22px; overflow:hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    /* HEADER */
+    .card-header {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      padding: 26px 36px;
+      display: flex; align-items:center; gap:16px;
+    }
+    .h-icon {
+      width:50px; height:50px; border-radius:14px;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.5rem; flex-shrink:0;
+    }
+    .card-header h2 { font-size:1.15rem; font-weight:700; color:white; }
+    .card-header p  { font-size:0.8rem; color:rgba(255,255,255,0.75); margin-top:3px; }
+
+    /* STEPS */
+    .steps {
+      display:flex; padding:18px 36px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .step { flex:1; display:flex; align-items:center; }
+    .sdot {
+      width:30px; height:30px; border-radius:50%;
+      background:#e2e8f0;
+      border:2px solid #cbd5e1;
+      color:#94a3b8;
+      font-size:0.8rem; font-weight:700;
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0; transition:all 0.3s; z-index:1;
+    }
+    .step.active .sdot { background:#2563eb; border-color:#2563eb; color:white; box-shadow:0 0 14px rgba(37,99,235,0.3); }
+    .step.done   .sdot { background:#16a34a; border-color:#16a34a; color:white; }
+    .sinfo { margin-left:10px; }
+    .sinfo .sn { font-size:0.68rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.06em; }
+    .sinfo .sl { font-size:0.82rem; font-weight:600; color:#94a3b8; }
+    .step.active .sinfo .sl { color:#2563eb; }
+    .step.done   .sinfo .sl { color:#16a34a; }
+    .sline { flex:1; height:1px; background:#e2e8f0; margin:0 12px; transition:background 0.3s; }
+    .sline.done { background:#16a34a; }
+
+    /* BODY */
+    .card-body { padding:30px 36px; }
+
+    /* ALERTS */
+    .alert { padding:11px 14px; border-radius:10px; font-size:0.83rem; margin-bottom:18px; }
+    .alert-err  { background:#fee2e2; color:#dc2626; border:1px solid #fecaca; }
+    .alert-ok   { background:#dcfce7; color:#16a34a; border:1px solid #bbf7d0; }
+    .alert-info { background:#dbeafe; color:#1d4ed8; border:1px solid #bfdbfe; }
+
+    /* FORM */
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .full  { grid-column:1/-1; }
+
+    .fg label {
+      display:block; font-size:0.73rem; font-weight:700;
+      color:#64748b; margin-bottom:6px;
+      text-transform:uppercase; letter-spacing:0.06em;
+    }
+    .fg input, .fg select {
+      width:100%; background:#f8fafc;
+      border:1px solid #e2e8f0;
+      border-radius:10px; padding:11px 14px;
+      color:#1e293b; font-size:0.92rem; outline:none;
+      transition:border 0.2s, box-shadow 0.2s;
+    }
+    .fg input:focus, .fg select:focus {
+      border-color:#2563eb;
+      box-shadow:0 0 0 3px rgba(37,99,235,0.1);
+      background:#ffffff;
+    }
+    .fg input::placeholder { color:#cbd5e1; }
+    .fg input[readonly]    { color:#94a3b8; cursor:not-allowed; background:#f1f5f9; }
+    .fg select option      { background:#ffffff; color:#1e293b; }
+
+    /* PHONE ROW */
+    .phone-row { display:flex; gap:10px; }
+    .phone-row input { flex:1; }
+    .btn-otp {
+      background:linear-gradient(135deg,#2563eb,#1d4ed8);
+      color:white; border:none; border-radius:10px;
+      padding:11px 16px; font-size:0.84rem; font-weight:700;
+      cursor:pointer; white-space:nowrap; transition:all 0.2s;
+      box-shadow:0 4px 12px rgba(37,99,235,0.25);
+    }
+    .btn-otp:hover { background:linear-gradient(135deg,#1d4ed8,#1e40af); }
+    .btn-otp:disabled { opacity:0.4; cursor:not-allowed; box-shadow:none; }
+
+    .otp-big { letter-spacing:0.4em; text-align:center; font-size:1.4rem; font-weight:800; }
+    .timer   { font-size:0.75rem; color:#94a3b8; text-align:right; margin-top:5px; }
+
+    /* SECTION LABEL */
+    .sec-lbl {
+      font-size:0.7rem; font-weight:700; color:#94a3b8;
+      text-transform:uppercase; letter-spacing:0.1em;
+      margin:22px 0 14px; padding-bottom:8px;
+      border-bottom:1px solid #e2e8f0;
+    }
+    .sec-lbl:first-child { margin-top:0; }
+
+    /* UPLOAD */
+    .upload-zone {
+      border:2px dashed #e2e8f0;
+      border-radius:12px; padding:18px;
+      text-align:center; cursor:pointer; transition:all 0.2s;
+      background:#f8fafc;
+    }
+    .upload-zone:hover { border-color:#2563eb; background:#eff6ff; }
+    .upload-zone.done  { border-color:#16a34a; background:#f0fdf4; }
+    .upload-zone input { display:none; }
+    .uz-icon  { font-size:1.7rem; margin-bottom:6px; }
+    .uz-title { font-size:0.84rem; font-weight:600; color:#1e293b; }
+    .uz-sub   { font-size:0.73rem; color:#94a3b8; margin-top:2px; }
+    .uz-done  { font-size:0.78rem; color:#16a34a; margin-top:6px; font-weight:600; }
+    .upload-preview { width:100%; max-height:90px; object-fit:cover; border-radius:8px; margin-top:10px; display:none; }
+
+    /* BUTTONS */
+    .btn-main {
+      width:100%; padding:13px;
+      background:linear-gradient(135deg,#2563eb,#1d4ed8);
+      border:none; border-radius:12px;
+      color:white; font-size:0.97rem; font-weight:700;
+      cursor:pointer; transition:all 0.2s; margin-top:6px;
+      box-shadow:0 4px 20px rgba(37,99,235,0.25);
+    }
+    .btn-main:hover { transform:translateY(-1px); box-shadow:0 8px 28px rgba(37,99,235,0.35); }
+    .btn-main:disabled { opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
+
+    .btn-back {
+      flex:1; padding:13px;
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      border-radius:12px; color:#64748b;
+      font-size:0.95rem; font-weight:600; cursor:pointer; transition:all 0.2s;
+    }
+    .btn-back:hover { background:#f1f5f9; color:#1e293b; }
+    .btn-row { display:flex; gap:12px; margin-top:6px; }
+
+    /* FOOTER */
+    .card-footer {
+      padding:16px 36px;
+      border-top:1px solid #e2e8f0;
+      background:#f8fafc;
+      text-align:center; font-size:0.83rem; color:#64748b;
+    }
+    .card-footer a { color:#2563eb; text-decoration:none; font-weight:600; }
+    .card-footer a:hover { color:#1d4ed8; }
+
+    @media(max-width:600px){
+      nav { padding:12px 16px; }
+      .card-header,.card-body,.card-footer,.steps { padding-left:18px; padding-right:18px; }
+      .grid2 { grid-template-columns:1fr; }
+      .full  { grid-column:1; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="brand">BIG <span>INDIA</span> MART</a>
+  <div class="nav-right">
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+  </div>
+</nav>
+
+<div class="page">
+<div class="card">
+
+  <!-- HEADER -->
+  <div class="card-header">
+    <div class="h-icon">🪪</div>
+    <div>
+      <h2>Create Your Account</h2>
+      <p>Verify mobile number &amp; complete KYC to get started</p>
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps">
+    <div class="step active" id="si1">
+      <div class="sdot" id="sd1">1</div>
+      <div class="sinfo"><div class="sn">Step 1</div><div class="sl">Mobile OTP</div></div>
+    </div>
+    <div class="sline" id="sl1"></div>
+    <div class="step" id="si2">
+      <div class="sdot" id="sd2">2</div>
+      <div class="sinfo"><div class="sn">Step 2</div><div class="sl">KYC Details</div></div>
+    </div>
+  </div>
+
+  <!-- STEP 1: OTP -->
+  <div id="step1">
+    <div class="card-body">
+      <div id="a1"></div>
+      <div class="fg" style="margin-bottom:16px;">
+        <label>Mobile Number</label>
+        <div class="phone-row">
+          <input type="tel" id="r-mobile" placeholder="Enter 10-digit number" maxlength="10"
+            oninput="this.value=this.value.replace(/\D/g,'')"/>
+          <button class="btn-otp" id="otp-btn" onclick="sendOTP()">Send OTP</button>
+        </div>
+      </div>
+      <div id="otp-wrap" style="display:none;">
+        <div class="fg" style="margin-bottom:5px;">
+          <label>Enter OTP</label>
+          <input type="text" id="r-otp" class="otp-big" placeholder="——————" maxlength="6"
+            oninput="this.value=this.value.replace(/\D/g,'')"/>
+        </div>
+        <div class="timer" id="otp-timer"></div>
+      </div>
+      <button class="btn-main" onclick="verifyOTP()" style="margin-top:20px;">Verify &amp; Continue →</button>
+    </div>
+    <div class="card-footer">Already registered? <a href="login.html">Login here</a></div>
+  </div>
+
+  <!-- STEP 2: KYC -->
+  <div id="step2" style="display:none;">
+    <div class="card-body">
+      <div id="a2"></div>
+
+      <div class="sec-lbl">👤 Personal Information</div>
+      <div class="grid2">
+        <div class="fg"><label>First Name *</label><input type="text" id="k-fname" placeholder="First name"/></div>
+        <div class="fg"><label>Last Name *</label><input type="text" id="k-lname" placeholder="Last name"/></div>
+        <div class="fg"><label>Date of Birth *</label><input type="date" id="k-dob"/></div>
+        <div class="fg">
+          <label>Gender *</label>
+          <select id="k-gender">
+            <option value="">Select</option>
+            <option>Male</option><option>Female</option><option>Other</option>
+          </select>
+        </div>
+        <div class="fg"><label>Mobile</label><input type="text" id="k-mobile" readonly/></div>
+        <div class="fg"><label>Email</label><input type="email" id="k-email" placeholder="your@email.com"/></div>
+      </div>
+
+      <div class="sec-lbl">📍 Address</div>
+      <div class="grid2">
+        <div class="fg full"><label>Address *</label><input type="text" id="k-address" placeholder="House no, Street, Area"/></div>
+        <div class="fg"><label>City *</label><input type="text" id="k-city" placeholder="City"/></div>
+        <div class="fg"><label>State *</label><input type="text" id="k-state" placeholder="State"/></div>
+        <div class="fg"><label>Pincode *</label><input type="text" id="k-pin" placeholder="6-digit pincode" maxlength="6" oninput="this.value=this.value.replace(/\D/g,'')"/></div>
+      </div>
+
+      <div class="sec-lbl">🪪 Identity &amp; Documents</div>
+      <div class="grid2">
+        <div class="fg"><label>Aadhaar Number *</label><input type="text" id="k-aadhaar" placeholder="XXXX XXXX XXXX" maxlength="14" oninput="fmtAadhaar(this)"/></div>
+        <div class="fg"><label>PAN Number</label><input type="text" id="k-pan" placeholder="ABCDE1234F" maxlength="10" oninput="this.value=this.value.toUpperCase()"/></div>
+
+        <div class="fg">
+          <label>Upload Aadhaar *</label>
+          <div class="upload-zone" id="bx-aadhaar" onclick="document.getElementById('f-aadhaar').click()">
+            <input type="file" id="f-aadhaar" accept="image/*" onchange="handleUpload('f-aadhaar','pv-aadhaar','bx-aadhaar','dk-aadhaar','aadhaar')"/>
+            <div class="uz-icon">📄</div>
+            <div class="uz-title">Upload Aadhaar Card</div>
+            <div class="uz-sub">JPG / PNG · Max 5MB</div>
+            <div class="uz-done" id="dk-aadhaar"></div>
+            <img id="pv-aadhaar" class="upload-preview" alt=""/>
+          </div>
+        </div>
+
+        <div class="fg">
+          <label>Upload PAN <span style="color:rgba(255,255,255,0.2);font-weight:400;">(optional)</span></label>
+          <div class="upload-zone" id="bx-pan" onclick="document.getElementById('f-pan').click()">
+            <input type="file" id="f-pan" accept="image/*" onchange="handleUpload('f-pan','pv-pan','bx-pan','dk-pan','pan')"/>
+            <div class="uz-icon">🪪</div>
+            <div class="uz-title">Upload PAN Card</div>
+            <div class="uz-sub">JPG / PNG · Max 5MB</div>
+            <div class="uz-done" id="dk-pan"></div>
+            <img id="pv-pan" class="upload-preview" alt=""/>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-lbl">🏦 Bank Details <span style="color:rgba(255,255,255,0.2);font-weight:400;">(optional)</span></div>
+      <div class="grid2">
+        <div class="fg"><label>Bank Name</label><input type="text" id="k-bank" placeholder="Bank name"/></div>
+        <div class="fg"><label>Account Number</label><input type="text" id="k-account" placeholder="Account number" oninput="this.value=this.value.replace(/\D/g,'')"/></div>
+        <div class="fg"><label>IFSC Code</label><input type="text" id="k-ifsc" placeholder="IFSC code" oninput="this.value=this.value.toUpperCase()"/></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="goBack()">← Back</button>
+        <button class="btn-main" onclick="submitKYC()" id="submit-btn" style="flex:2;margin-top:0;">Submit KYC ✓</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+  let verifiedMobile='', generatedOTP='', timerInterval=null, aadhaarB64='', panB64='';
+
+  function showAlert(id,msg,type='err'){
+    document.getElementById(id).innerHTML=`<div class="alert alert-${type}">${msg}</div>`;
+  }
+  function fmtAadhaar(el){
+    let v=el.value.replace(/\D/g,'').slice(0,12);
+    el.value=v.replace(/(\d{4})(?=\d)/g,'$1 ');
+  }
+
+  function sendOTP(){
+    const mob=document.getElementById('r-mobile').value.trim();
+    if(mob.length!==10) return showAlert('a1','Enter valid 10-digit mobile number');
+    generatedOTP=Math.floor(100000+Math.random()*900000).toString();
+    document.getElementById('otp-wrap').style.display='block';
+    document.getElementById('r-otp').value='';
+    document.getElementById('otp-btn').disabled=true;
+    document.getElementById('otp-btn').textContent='Sent ✓';
+    showAlert('a1',
+      `📱 OTP sent to <strong>+91 ${mob}</strong><br/>
+       <span style="font-size:1.2rem;letter-spacing:0.2em;font-weight:800;">${generatedOTP}</span>
+       <span style="display:block;font-size:0.72rem;margin-top:3px;opacity:0.6;">Demo mode — connect Firebase for real SMS</span>`,
+      'info');
+    clearInterval(timerInterval);
+    let s=60;
+    timerInterval=setInterval(()=>{
+      s--;
+      document.getElementById('otp-timer').textContent=`Resend in ${s}s`;
+      if(s<=0){
+        clearInterval(timerInterval);
+        document.getElementById('otp-timer').textContent='';
+        document.getElementById('otp-btn').disabled=false;
+        document.getElementById('otp-btn').textContent='Resend';
+      }
+    },1000);
+  }
+
+  function verifyOTP(){
+    const mob=document.getElementById('r-mobile').value.trim();
+    const otp=document.getElementById('r-otp').value.trim();
+    if(mob.length!==10) return showAlert('a1','Enter valid mobile number');
+    if(!generatedOTP) return showAlert('a1','Please send OTP first');
+    if(!otp) return showAlert('a1','Please enter the OTP');
+    if(otp!==generatedOTP) return showAlert('a1','❌ Incorrect OTP. Try again');
+    clearInterval(timerInterval);
+    verifiedMobile=mob;
+    document.getElementById('step1').style.display='none';
+    document.getElementById('step2').style.display='block';
+    document.getElementById('k-mobile').value='+91 '+mob;
+    document.getElementById('si1').className='step done';
+    document.getElementById('sd1').textContent='✓';
+    document.getElementById('sl1').classList.add('done');
+    document.getElementById('si2').className='step active';
+    window.scrollTo(0,0);
+  }
+
+  function goBack(){
+    document.getElementById('step2').style.display='none';
+    document.getElementById('step1').style.display='block';
+    document.getElementById('si1').className='step active';
+    document.getElementById('sd1').textContent='1';
+    document.getElementById('sl1').classList.remove('done');
+    document.getElementById('si2').className='step';
+    window.scrollTo(0,0);
+  }
+
+  function handleUpload(inputId,previewId,boxId,doneId,type){
+    const file=document.getElementById(inputId).files[0];
+    if(!file) return;
+    if(file.size>5*1024*1024) return alert('File too large! Max 5MB.');
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const pv=document.getElementById(previewId);
+      pv.src=e.target.result; pv.style.display='block';
+      document.getElementById(boxId).classList.add('done');
+      document.getElementById(doneId).textContent='✅ '+file.name;
+      if(type==='aadhaar') aadhaarB64=e.target.result;
+      if(type==='pan') panB64=e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function submitKYC(){
+    const fname=document.getElementById('k-fname').value.trim();
+    const lname=document.getElementById('k-lname').value.trim();
+    const dob=document.getElementById('k-dob').value;
+    const gender=document.getElementById('k-gender').value;
+    const address=document.getElementById('k-address').value.trim();
+    const city=document.getElementById('k-city').value.trim();
+    const state=document.getElementById('k-state').value.trim();
+    const pin=document.getElementById('k-pin').value.trim();
+    const aadhaar=document.getElementById('k-aadhaar').value.replace(/\s/g,'');
+    const pan=document.getElementById('k-pan').value.trim();
+    const bank=document.getElementById('k-bank').value.trim();
+    const account=document.getElementById('k-account').value.trim();
+    const ifsc=document.getElementById('k-ifsc').value.trim();
+    const email=document.getElementById('k-email').value.trim();
+
+    if(!fname||!lname) return showAlert('a2','Please enter First and Last name');
+    if(!dob) return showAlert('a2','Please enter Date of Birth');
+    if(!gender) return showAlert('a2','Please select Gender');
+    if(!address||!city||!state) return showAlert('a2','Please fill complete address');
+    if(pin.length!==6) return showAlert('a2','Enter valid 6-digit Pincode');
+    if(aadhaar.length!==12) return showAlert('a2','Enter valid 12-digit Aadhaar number');
+    if(!aadhaarB64) return showAlert('a2','Please upload Aadhaar card photo');
+
+    const btn=document.getElementById('submit-btn');
+    btn.textContent='Submitting...'; btn.disabled=true;
+
+    const users=JSON.parse(localStorage.getItem('bim_users')||'[]');
+    if(users.find(u=>u.mobile===verifiedMobile)){
+      showAlert('a2','This mobile is already registered. <a href="login.html" style="color:#a78bfa;">Login here</a>');
+      btn.textContent='Submit KYC ✓'; btn.disabled=false; return;
+    }
+
+    const user={
+      id:Date.now(), mobile:verifiedMobile,
+      name:fname+' '+lname, fname, lname,
+      dob, gender, email, address, city, state, pin,
+      aadhaar, pan, bank, account, ifsc,
+      aadhaarPhoto:aadhaarB64, panPhoto:panB64,
+      kycStatus:'Pending', role:'customer',
+      joinDate:new Date().toLocaleDateString('en-IN')
+    };
+    users.push(user);
+    localStorage.setItem('bim_users',JSON.stringify(users));
+    localStorage.setItem('bim_current_user',JSON.stringify(user));
+    showAlert('a2','🎉 KYC submitted successfully! Redirecting...','ok');
+    setTimeout(()=>window.location.href='customer-dashboard.html',1800);
+  }
+</script>
+</body>
+</html>

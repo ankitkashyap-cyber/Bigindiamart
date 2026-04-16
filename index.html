@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BIG INDIA Mart - Your One Stop Service Platform</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { background: #f8fafc; color: #1e293b; }
+
+    /* NAV */
+    .top-nav { background: #ffffff; backdrop-filter: blur(10px); padding: 16px 60px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 8px rgba(0,0,0,0.06); }
+    .top-nav .brand { font-size: 1.5rem; font-weight: 800; color: #1e293b; text-decoration: none; }
+    .top-nav .brand span { color: #f97316; }
+    .top-nav .links a { color: #64748b; text-decoration: none; margin-left: 28px; font-size: 0.9rem; transition: color 0.2s; }
+    .top-nav .links a:hover { color: #1e293b; }
+    .top-nav .links .cta { background: #f97316; color: white !important; padding: 9px 22px; border-radius: 10px; font-weight: 600; }
+    .top-nav .links .cta:hover { background: #ea6c00; }
+
+    /* HERO */
+    .hero-section { min-height: 92vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 60px 20px; position: relative; overflow: hidden; background: linear-gradient(135deg, #eff6ff 0%, #fff7ed 50%, #f0fdf4 100%); }
+    .hero-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, rgba(249,115,22,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(37,99,235,0.06) 0%, transparent 50%); }
+    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .hero-badge { display: inline-block; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); color: #ea580c; padding: 6px 16px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; margin-bottom: 24px; }
+    .hero-title { font-size: 3.5rem; font-weight: 900; line-height: 1.1; color: #1e293b; margin-bottom: 20px; }
+    .hero-title span { background: linear-gradient(135deg, #f97316, #ea580c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-sub { font-size: 1.1rem; color: #64748b; max-width: 500px; margin: 0 auto 36px; line-height: 1.7; }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-orange { background: linear-gradient(135deg, #f97316, #ea580c); color: white; padding: 14px 32px; border-radius: 12px; font-size: 1rem; font-weight: 700; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; }
+    .btn-orange:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(249,115,22,0.3); }
+    .btn-ghost { background: white; color: #1e293b; padding: 14px 32px; border-radius: 12px; font-size: 1rem; font-weight: 600; text-decoration: none; border: 1px solid #e2e8f0; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .btn-ghost:hover { background: #f8fafc; border-color: #cbd5e1; }
+
+    /* STATS BAR */
+    .stats-bar { background: #ffffff; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; padding: 28px 60px; display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .stat-item { text-align: center; }
+    .stat-item .num { font-size: 1.8rem; font-weight: 800; color: #f97316; }
+    .stat-item .lbl { font-size: 0.8rem; color: #94a3b8; margin-top: 2px; }
+
+    /* SERVICES */
+    .services-section { padding: 80px 60px; background: #f8fafc; }
+    .sec-label { text-align: center; color: #f97316; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+    .sec-title { text-align: center; font-size: 2.2rem; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
+    .sec-sub { text-align: center; color: #64748b; font-size: 0.95rem; margin-bottom: 50px; }
+    .svc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; max-width: 1100px; margin: 0 auto; }
+    .svc-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 28px 20px; text-align: center; text-decoration: none; color: #1e293b; transition: all 0.25s; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .svc-card:hover { background: #fff7ed; border-color: rgba(249,115,22,0.3); transform: translateY(-5px); box-shadow: 0 8px 24px rgba(249,115,22,0.12); }
+    .svc-card .svc-icon { font-size: 2.5rem; margin-bottom: 14px; }
+    .svc-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; color: #1e293b; }
+    .svc-card p { font-size: 0.78rem; color: #64748b; }
+
+    /* WHY US */
+    .why-section { padding: 80px 60px; background: #ffffff; border-top: 1px solid #e2e8f0; }
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
+    .why-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 18px; padding: 28px 24px; }
+    .why-card .w-icon { font-size: 2rem; margin-bottom: 14px; }
+    .why-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: #1e293b; }
+    .why-card p { font-size: 0.83rem; color: #64748b; line-height: 1.6; }
+
+    /* CTA BANNER */
+    .cta-banner { margin: 0 60px 80px; background: linear-gradient(135deg, #f97316, #ea580c); border-radius: 24px; padding: 50px 60px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+    .cta-banner h2 { font-size: 1.8rem; font-weight: 800; color: white; }
+    .cta-banner p { color: rgba(255,255,255,0.85); margin-top: 6px; }
+    .btn-white { background: white; color: #ea580c; padding: 14px 32px; border-radius: 12px; font-size: 1rem; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+
+    /* FOOTER */
+    footer { background: #1e293b; border-top: 1px solid #334155; padding: 30px 60px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    footer p { color: #94a3b8; font-size: 0.83rem; }
+    footer .f-links a { color: #94a3b8; text-decoration: none; margin-left: 20px; font-size: 0.83rem; }
+    footer .f-links a:hover { color: white; }
+
+    @media(max-width:768px) {
+      .top-nav { padding: 14px 20px; }
+      .hero-title { font-size: 2.2rem; }
+      .stats-bar { gap: 30px; padding: 24px 20px; }
+      .services-section, .why-section { padding: 50px 20px; }
+      .cta-banner { margin: 0 20px 50px; padding: 36px 28px; }
+      footer { padding: 24px 20px; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top-nav">
+  <a href="index.html" class="brand">BIG <span>INDIA</span> MART</a>
+  <div class="links">
+    <a href="#services">Services</a>
+    <a href="#why">Why Us</a>
+    <a href="login.html">Login</a>
+    <a href="register.html" class="cta">Register Free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="hero-content">
+    <div class="hero-badge">🇮🇳 India's Trusted Service Platform</div>
+    <h1 class="hero-title">Your One Stop<br/><span>Reliable Services</span><br/>Platform</h1>
+    <p class="hero-sub">Explore, request and enjoy dozens of essential services at one place — with rewards, cashback and 24/7 support.</p>
+    <div class="hero-btns">
+      <a href="register.html" class="btn-orange">Get Started Free →</a>
+      <a href="login.html" class="btn-ghost">Login to Account</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="num">10K+</div><div class="lbl">Happy Customers</div></div>
+  <div class="stat-item"><div class="num">8+</div><div class="lbl">Core Services</div></div>
+  <div class="stat-item"><div class="num">24/7</div><div class="lbl">Support Available</div></div>
+  <div class="stat-item"><div class="num">100%</div><div class="lbl">KYC Verified</div></div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="sec-label">What We Offer</div>
+  <h2 class="sec-title">Our Core Services</h2>
+  <p class="sec-sub">Everything you need, all in one place</p>
+  <div class="svc-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));">
+    <a href="register.html" class="svc-card"><div class="svc-icon">🛒</div><h3>Grocery</h3><p>Fresh groceries delivered</p></a>
+    <a href="register.html" class="svc-card"><div class="svc-icon">✈️</div><h3>Tour & Travel</h3><p>Book tours & travel packages</p></a>
+    <a href="register.html" class="svc-card"><div class="svc-icon">🏠</div><h3>Rent</h3><p>House & property on rent</p></a>
+    <a href="register.html" class="svc-card"><div class="svc-icon">🏷️</div><h3>Sale</h3><p>Buy & sell products easily</p></a>
+    <a href="register.html" class="svc-card"><div class="svc-icon">📊</div><h3>Tax Consultancy</h3><p>GST, ITR & tax services</p></a>
+    <a href="register.html" class="svc-card"><div class="svc-icon">🎓</div><h3>Education Consultancy</h3><p>Admissions & career guidance</p></a>
+    <a href="register.html" class="svc-card"><div class="svc-icon">💼</div><h3>Job Placement</h3><p>Find jobs & hire talent</p></a>
+    <a href="register.html" class="svc-card"><div class="svc-icon">🛍️</div><h3>E-Commerce</h3><p>Online shopping platform</p></a>
+    <a href="register.html" class="svc-card"><div class="svc-icon">🇮🇳</div><h3>Sarkari Yojana</h3><p>Govt schemes & benefits</p></a>
+    <a href="register.html" class="svc-card"><div class="svc-icon">🏗️</div><h3>Construction</h3><p>Building & civil work</p></a>
+    <a href="register.html" class="svc-card"><div class="svc-icon">📈</div><h3>Investment</h3><p>Mutual funds & investments</p></a>
+    <a href="register.html" class="svc-card"><div class="svc-icon">🏢</div><h3>Real Estate</h3><p>Buy, sell & rent property</p></a>
+    <a href="register.html" class="svc-card"><div class="svc-icon">🏪</div><h3>Our Listed Shops</h3><p>Explore local businesses</p></a>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section" id="why">
+  <div class="sec-label">Why Choose Us</div>
+  <h2 class="sec-title">Trusted by Thousands</h2>
+  <p class="sec-sub">Here's what makes BIG INDIA Mart different</p>
+  <div class="why-grid">
+    <div class="why-card"><div class="w-icon">🔒</div><h3>KYC Verified Users</h3><p>All users go through Aadhaar-based KYC verification for a safe platform.</p></div>
+    <div class="why-card"><div class="w-icon">💰</div><h3>Cashback & Rewards</h3><p>Earn rewards on every transaction and redeem them on future orders.</p></div>
+    <div class="why-card"><div class="w-icon">📞</div><h3>24/7 Support</h3><p>Round the clock customer support to resolve any issue instantly.</p></div>
+    <div class="why-card"><div class="w-icon">🚀</div><h3>Fast & Reliable</h3><p>Quick delivery and reliable service partners across all categories.</p></div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <div>
+    <h2>Ready to get started?</h2>
+    <p>Join thousands of happy customers on BIG INDIA MART today.</p>
+  </div>
+  <a href="register.html" class="btn-white">Register Now →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 BIG INDIA MART. All rights reserved. | bigindiamart.co.in</p>
+  <div class="f-links">
+    <a href="login.html">Login</a>
+    <a href="register.html">Register</a>
+  </div>
+</footer>
+
+</body>
+</html>

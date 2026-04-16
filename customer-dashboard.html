@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - BIG INDIA Mart</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="index.html" style="text-decoration:none;color:inherit;">BIG <span>INDIA</span> MART</a></div>
+  <div class="nav-links">
+    <span id="nav-user" style="color:#94a3b8; font-size:0.9rem;"></span>
+    <a href="#" onclick="logout()" style="color:#ef4444;">Logout</a>
+  </div>
+</nav>
+
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="user-info">
+      <div class="avatar" id="avatar-letter">U</div>
+      <h4 id="sidebar-name">User</h4>
+      <p id="sidebar-email">user@email.com</p>
+    </div>
+    <a href="customer-dashboard.html" class="active">🏠 Dashboard</a>
+    <a href="grocery.html">🛒 Grocery</a>
+    <a href="#" onclick="comingSoon()">✈️ Tour & Travel</a>
+    <a href="#" onclick="comingSoon()">🏠 Rent</a>
+    <a href="#" onclick="comingSoon()">🏷️ Sale</a>
+    <a href="#" onclick="comingSoon()">📊 Tax Consultancy</a>
+    <a href="#" onclick="comingSoon()">🎓 Education</a>
+    <a href="#" onclick="comingSoon()">💼 Job Placement</a>
+    <a href="#" onclick="comingSoon()">🛍️ E-Commerce</a>
+    <a href="#" onclick="comingSoon()">🇮🇳 Sarkari Yojana</a>
+    <a href="#" onclick="comingSoon()">🏗️ Construction</a>
+    <a href="#" onclick="comingSoon()">📈 Investment</a>
+    <a href="#" onclick="comingSoon()">🏢 Real Estate</a>
+    <a href="#" onclick="comingSoon()">🏪 Listed Shops</a>
+    <a href="profile.html">👤 My Profile</a>
+    <a href="#" onclick="logout()" style="color:#ef4444; margin-top:auto;">🚪 Logout</a>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-content">
+    <div class="page-title">Welcome back, <span id="welcome-name">User</span> 👋</div>
+    <div class="page-subtitle">Here's what's available for you today</div>
+
+    <!-- KYC BANNER -->
+    <div id="kyc-banner" style="display:none; background:rgba(234,179,8,0.08); border:1px solid rgba(234,179,8,0.25); border-radius:12px; padding:14px 18px; margin-bottom:24px; display:flex; align-items:center; gap:12px;">
+      <span style="font-size:1.3rem;">⚠️</span>
+      <div>
+        <strong>KYC Pending</strong>
+        <p style="font-size:0.85rem; color:#94a3b8; margin-top:2px;">Your KYC verification is under review. Some services may be limited.</p>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Orders</div>
+        <div class="stat-value" id="stat-orders">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">KYC Status</div>
+        <div class="stat-value" id="stat-kyc" style="font-size:1rem; margin-top:4px;"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Member Since</div>
+        <div class="stat-value" id="stat-since" style="font-size:1rem; margin-top:4px;"></div>
+      </div>
+    </div>
+
+    <!-- SERVICES GRID -->
+    <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:20px;">Our Services</h3>
+    <div class="services-grid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr));">
+      <a href="grocery.html" class="service-card">
+        <div class="icon">🛒</div><h3>Grocery</h3><p>Order fresh groceries</p>
+      </a>
+      <a href="#" class="service-card" onclick="comingSoon(); return false;">
+        <div class="icon">✈️</div><h3>Tour & Travel</h3><p>Book tours & packages</p>
+      </a>
+      <a href="#" class="service-card" onclick="comingSoon(); return false;">
+        <div class="icon">🏠</div><h3>Rent</h3><p>House & property rent</p>
+      </a>
+      <a href="#" class="service-card" onclick="comingSoon(); return false;">
+        <div class="icon">🏷️</div><h3>Sale</h3><p>Buy & sell products</p>
+      </a>
+      <a href="#" class="service-card" onclick="comingSoon(); return false;">
+        <div class="icon">📊</div><h3>Tax Consultancy</h3><p>GST, ITR & tax help</p>
+      </a>
+      <a href="#" class="service-card" onclick="comingSoon(); return false;">
+        <div class="icon">🎓</div><h3>Education</h3><p>Admissions & guidance</p>
+      </a>
+      <a href="#" class="service-card" onclick="comingSoon(); return false;">
+        <div class="icon">💼</div><h3>Job Placement</h3><p>Find jobs & hire</p>
+      </a>
+      <a href="#" class="service-card" onclick="comingSoon(); return false;">
+        <div class="icon">🛍️</div><h3>E-Commerce</h3><p>Online shopping</p>
+      </a>
+      <a href="#" class="service-card" onclick="comingSoon(); return false;">
+        <div class="icon">🇮🇳</div><h3>Sarkari Yojana</h3><p>Govt schemes</p>
+      </a>
+      <a href="#" class="service-card" onclick="comingSoon(); return false;">
+        <div class="icon">🏗️</div><h3>Construction</h3><p>Building & civil work</p>
+      </a>
+      <a href="#" class="service-card" onclick="comingSoon(); return false;">
+        <div class="icon">📈</div><h3>Investment</h3><p>Mutual funds & more</p>
+      </a>
+      <a href="#" class="service-card" onclick="comingSoon(); return false;">
+        <div class="icon">🏢</div><h3>Real Estate</h3><p>Buy, sell & rent</p>
+      </a>
+      <a href="#" class="service-card" onclick="comingSoon(); return false;">
+        <div class="icon">🏪</div><h3>Listed Shops</h3><p>Local businesses</p>
+      </a>
+    </div>
+
+    <!-- RECENT ORDERS -->
+    <h3 style="font-size:1.1rem; font-weight:600; margin:32px 0 16px;">Recent Orders</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Items</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="orders-table">
+          <tr><td colspan="5" style="text-align:center; color:#64748b; padding:30px;">No orders yet. Start shopping!</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- COMING SOON MODAL -->
+<div class="modal-overlay" id="coming-modal">
+  <div class="modal" style="text-align:center;">
+    <div style="font-size:3rem; margin-bottom:16px;">🚀</div>
+    <h3>Coming Soon!</h3>
+    <p style="color:#94a3b8; margin:12px 0 24px;">This service will be available soon. Stay tuned!</p>
+    <button class="btn btn-blue" onclick="document.getElementById('coming-modal').classList.remove('active')">Got it</button>
+  </div>
+</div>
+
+<script>
+  const user = JSON.parse(localStorage.getItem('bim_current_user') || 'null');
+  if (!user || user.role !== 'customer') window.location.href = 'login.html';
+
+  document.getElementById('nav-user').textContent = user.name;
+  document.getElementById('sidebar-name').textContent = user.name;
+  document.getElementById('sidebar-email').textContent = user.email;
+  document.getElementById('avatar-letter').textContent = user.name.charAt(0).toUpperCase();
+  document.getElementById('welcome-name').textContent = user.name.split(' ')[0];
+  document.getElementById('stat-since').textContent = user.joinDate || 'Today';
+
+  const kycEl = document.getElementById('stat-kyc');
+  if (user.kycStatus === 'Verified') {
+    kycEl.innerHTML = '<span class="badge badge-green">Verified ✓</span>';
+  } else {
+    kycEl.innerHTML = '<span class="badge badge-yellow">Pending</span>';
+    document.getElementById('kyc-banner').style.display = 'flex';
+  }
+
+  // Load orders
+  const orders = JSON.parse(localStorage.getItem('bim_orders_' + user.id) || '[]');
+  document.getElementById('stat-orders').textContent = orders.length;
+  if (orders.length > 0) {
+    const tbody = document.getElementById('orders-table');
+    tbody.innerHTML = orders.slice(-5).reverse().map(o => `
+      <tr>
+        <td>#${o.id}</td>
+        <td>${o.items} items</td>
+        <td>₹${o.total}</td>
+        <td>${o.date}</td>
+        <td><span class="badge badge-green">${o.status}</span></td>
+      </tr>
+    `).join('');
+  }
+
+  function comingSoon() {
+    document.getElementById('coming-modal').classList.add('active');
+  }
+
+  function logout() {
+    localStorage.removeItem('bim_current_user');
+    window.location.href = 'login.html';
+  }
+</script>
+
+</body>
+</html>
